@@ -206,6 +206,12 @@ endif()
 if(UNIX)
     # On unix-like platforms the library is almost always called libz
    set_target_properties(zlib zlibstatic PROPERTIES OUTPUT_NAME z)
+   if(EMSCRIPTEN)
+     # Under Emscripten both the SHARED and STATIC targets degrade to static
+     # libraries and would both emit libz.a, which Ninja rejects as a duplicate
+     # output. Give the (unused) shared target a distinct name.
+     set_target_properties(zlib PROPERTIES OUTPUT_NAME z_shared)
+   endif()
    if(NOT APPLE)
      set_target_properties(zlib PROPERTIES LINK_FLAGS "-Wl,--version-script,\"${CMAKE_CURRENT_SOURCE_DIR}/zlib.map\"")
    endif()
