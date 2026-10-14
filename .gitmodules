@@ -1,0 +1,4 @@
+[submodule "libs/love"]
+	path = libs/love
+	url = https://github.com/dreagledr/love.git
+	branch = emscripten-fetch
